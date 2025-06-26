@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Water Whack</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div class="img">
+  <img id="logo" src="/img/cw_vertical_black.jpg" alt="charity water logo">
+  </div>
+  <div class="container">
+    <h1>Water Whack</h1>
+    <p class="game-instructions">Collect 20 items to complete the game!</p>
+    <div class="stats">
+      <p>Cans Collected: <span id="current-cans">0</span></p>
+      <p>Time Left: <span id="timer">30</span>s</p>
+    </div>
+    <div id="achievements" class="achievement"></div>
+    <div class="game-grid"></div>
+    <button id="start-game">Start Game</button>
+    <!-- Modal for end game message -->
+    <div id="endgame-modal" class="modal">
+      <div class="modal-content" id="modal-content"></div>
+      <button id="close-modal" class="close-modal">Close</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
