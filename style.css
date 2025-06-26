@@ -193,3 +193,15 @@ button {
 .close-modal:hover {
   background-color: #159A48;
 }
+
+#difficulty {
+  background-color: #000;
+  color: #FFC907;
+  border: 2px solid #2E9DF7;
+  font-weight: bold;
+}
+
+#difficulty:focus {
+  outline: none;
+  border-color: #FFC907;
+}

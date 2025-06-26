@@ -20,6 +20,17 @@ const losingMessages = [
   "So close! Try once more for clean water!"
 ];
 
+// Difficulty settings
+const DIFFICULTY_SETTINGS = {
+  easy:   { goal: 15, spawnMs: 1200, time: 35 },
+  normal: { goal: 20, spawnMs: 1000, time: 30 },
+  hard:   { goal: 25, spawnMs: 700,  time: 25 }
+};
+
+let currentGoal = DIFFICULTY_SETTINGS.normal.goal;
+let currentSpawnMs = DIFFICULTY_SETTINGS.normal.spawnMs;
+let currentTime = DIFFICULTY_SETTINGS.normal.time;
+
 // Creates the 3x3 game grid where items will appear
 function createGrid() {
   const grid = document.querySelector('.game-grid');
@@ -56,15 +67,24 @@ function spawnWaterCan() {
 // Initializes and starts a new game
 function startGame() {
   if (gameActive) return; // Prevent starting a new game if one is already active
+
+  // Get selected difficulty
+  const diff = document.getElementById('difficulty')?.value || 'normal';
+  const settings = DIFFICULTY_SETTINGS[diff];
+  currentGoal = settings.goal;
+  currentSpawnMs = settings.spawnMs;
+  currentTime = settings.time;
+
   gameActive = true;
   currentCans = 0;
   document.getElementById("current-cans").innerHTML = currentCans;
   document.getElementById("achievements").innerHTML = "";
   createGrid(); // Set up the game grid
-  spawnInterval = setInterval(spawnWaterCan, 1000); // Spawn water cans every second
+  spawnInterval = setInterval(spawnWaterCan, currentSpawnMs); // Use difficulty spawn rate
 
-  let timeLeft = 30;
+  let timeLeft = currentTime;
   let timerDisplay = document.getElementById("timer");
+  timerDisplay.innerHTML = timeLeft;
 
   let countdown = setInterval(function() {
     timeLeft--;
@@ -79,14 +99,14 @@ function startGame() {
       const modal = document.getElementById("endgame-modal");
       const modalContent = document.getElementById("modal-content");
       let msg, color;
-      if (currentCans >= 20) {
+      if (currentCans >= currentGoal) {
         msg = winningMessages[Math.floor(Math.random() * winningMessages.length)];
         color = '#4FCB53';
       } else {
         msg = losingMessages[Math.floor(Math.random() * losingMessages.length)];
         color = '#F5402C';
       }
-      modalContent.innerHTML = `<span style='color:${color};font-weight:bold;'>${msg}</span>`;
+      modalContent.innerHTML = `<span style='color:${color};font-weight:bold;'>${msg}<br><br>(${currentCans}/${currentGoal} cans)</span>`;
       modal.style.display = "flex";
     }
   }, 1000); // runs every 1000 ms = 1 second
