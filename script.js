@@ -132,6 +132,10 @@ document.querySelector('.game-grid').addEventListener('click', function(e) {
   if (e.target.classList.contains('water-can')) {
     currentCans++;
     document.getElementById("current-cans").innerHTML = currentCans;
+    // Remove the can so it can't be clicked again
+    if (e.target.parentElement) {
+      e.target.parentElement.innerHTML = '';
+    }
   }
 });
 
